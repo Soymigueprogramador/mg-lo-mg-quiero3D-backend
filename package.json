@@ -1,6 +1,7 @@
 {
   "name": "mg-lo-quiero3d-backend",
   "version": "1.0.0",
+  "type": "module",
   "description": "este es un proyecto backend para un emprendimiento de impresion 3D ",
   "main": "index.js",
   "scripts": {
