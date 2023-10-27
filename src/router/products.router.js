@@ -23,7 +23,6 @@ const validacionParaAgregarProductos = [
     }
 ];
 
-//module.exports = validacionParaAgregarProductos;
 
 const validacionParaActualizarProductos = [
     body('title').optional().isString(),
@@ -104,10 +103,30 @@ router.post('/products', validacionParaAgregarProductos, (req, res) => {
 });
 
 router.put('/products/:pid', validacionParaActualizarProductos, (req, res) => {
-    const producto = readJSONfile(productsPath);
+    const products = readJSONfile(productsPath);
     const productId = req.params.pid;
     const actualizarProducto = req.body;
+    const index = products.findIndex(p => p.id === productId); 
+    if (index !== -1) {
+        products[ index ] = { ...products[ index ], ...actualizarProducto };
+        escribirUnNuevoArchivoJson(productsPath, products);
+        res.setHeader('content-type', 'application/json');
+        res.json(products[ index ]);
+    }
+});
 
+router.delete('/products/:pid', (req, res) => {
+    const products = readJSONfile(productsPath);
+    const productId = req.params.pid;
+    const index = products.findIndex(p => p.id === productId);
+    if (index !== -1) {
+        const filtrarProducto = products.filter(p => p.id === productId);
+        res.setHeader('content-type', 'application/json');
+        res.send('Producto con el ID ${productId} fue eliminado'); 
+    } else {
+        res.setHeader('content-type', 'application/json');
+    res.status(404).send('Producto no encontrado');
+    }
 });
 
 export default router;
