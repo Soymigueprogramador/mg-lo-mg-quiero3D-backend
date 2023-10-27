@@ -1,18 +1,14 @@
-//haciendo las importaciones.
 import express from "express";
-import cartRouter from './router/cart.router';
-import productsRouter from './router/products.js';
+import cartRouter from '../src/router/cart.router.js';
+import productsRouter from '../src/router/products.router.js';
 
-//levantando el servidor.
-const app = Express();
+const app = express(); 
 const port = 8080;
 app.use(express.json());
 
-//mencionando a las apis que voy a tratar de usar. 
-app.use('/api', productRouter);
-app.use('/api', cartRouter);
+app.use('/api/products', productsRouter); 
+app.use('/api/cart', cartRouter); 
 
-//despertando al servidor para que escuche. 
 app.listen(port, () => {
-    console.log('servidor despierto en el ${port}');
+    console.log(`Servidor despierto en el ${port}`); 
 });
