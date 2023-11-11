@@ -129,4 +129,10 @@ router.delete('/products/:pid', (req, res) => {
     }
 });
 
+const getProducts = () => {
+    const products = readJSONfile(productsPath);
+    return products;
+};
+
+export {getProducts}
 export default router;
