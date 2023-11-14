@@ -10,6 +10,7 @@ import productsRouter from '../src/router/products.router.js';
 import router from '../src/router/cart.router.js';
 import { title } from 'process';
 import { Socket } from 'socket.io-client';
+import { constants } from 'buffer';
 
 
 const app = express();
@@ -27,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/socket.io', express.static(path.join(__dirname, '../node_modules/socket.io/client-dist')));
 app.use(express.json());
-leerMensajes()
+leerMensajes();
 //app.use('/api', apiRouter);
 
 app.use('/api/products', productsRouter);
@@ -112,13 +113,13 @@ app.get('/cart/:cid', async (req, res) => {
 const io = new server(server);
 app.locals.io = io;
 
-io.on('connection',  Socket => {
+io.on('connection', socket => {
     console.log('se conecto un usuario nuevo con el id ${socket.id}');
     io.on('mensaje', Data => {
         console.log(Data);
     });
      Socket.on('id', email => {
-        console.log('se conecto un usuario con el ${email}');
+        console.log('se conecto un usuario con el ${email}');   
         mensajes.push({
             user: 'server',
             mensaje: 'Hola te damos la bienvenida al chat, ¿en que podemos ayudarte?'
@@ -128,4 +129,44 @@ io.on('connection',  Socket => {
         Socket.broadcast.emit('nuevoUsuario', email);
         mensajes.pop();
      });
+
+  socket.on('nuevoMensaje', mensaje => {
+    mensajes.push(mensaje);
+    io.emit('llegoUnNuevoMensaje', mensaje);
+    const nuevoMensaje = new chatModel({
+        user: mensaje.user,
+        mensaje: mensaje.mensaje
+    });
+    nuevoMensaje.save()
+    .then(() => {
+        console.log('Mensaje guardado');
+    })
+    .catch(error => {
+        console.log('Error al guardar el mensaje', error);
+    });
+  });
+});  
+
+socket.on('disconnect', () => {
+    console.log('Se desconecto el cliente con el ID ${socket.id}');
+    const indice = usuarios.findIndex(usuarios => usuarios.id === socket.id);
+    if (indice >= 0) {
+        const emailDesconectado = usuarios[indice].usuarios;
+        socket.broadcast.emit('desconeccion', emailDesconectado);
+        usuarios.splice(indice, 1);
+    }
 });
+
+async function leerMensajes() {
+    try {
+        const mensajesDB = await chatModel.find({}, 'user mensaje').exec();
+        const mensajeArray = mensajesDB.map((documento) => ({
+            user: documento.user,
+            mensaje: documento.mensaje
+        }));
+        mensaje.length = 0; 
+        mensaje.push(...mensajeArray);
+    } catch (error) {
+        console.error('Error al leer los mensajes guardados', error);
+    }
+};
