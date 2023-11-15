@@ -18,7 +18,20 @@ const cartScheme = new mongoose.Scheme({
 });
 
 const productsScheme = new mongoose.Scheme({
-    
+    title: { type: string, required: true },
+    description: { type: string, required: true },
+    price: { type: number, required: true },
+    price: { type: number, required: true },
+    stock: { type: number, required: true },
+    category: { type: string, required: true },
+    thumbnail: [],
+    status: { type: Boolean, required: true },
+});
+productsScheme.plugin(mongoosePaginate);
+
+const chatScheme = new mongoose.Scheme({
+    user: string,
+    mensaje: string
 });
 
 export const cartModel = mongoose.model (cartCollection, cartScheme);

@@ -4,14 +4,13 @@ import path from 'path';
 import __dirname from './util.js';
 import { ObjectId } from 'mongoose';
 import { Server } from 'socket.io';
-
 import cartRouter from '../src/router/cart.router.js';
 import productsRouter from '../src/router/products.router.js';
 import router from '../src/router/cart.router.js';
-import { title } from 'process';
 import { Socket } from 'socket.io-client';
-import { constants } from 'buffer';
-
+import { cartModel } from './dao/models/user.model.js';
+import { productsModel } from './dao/models/user.model.js';
+import { chatModel } from './dao/models/user.model.js';
 
 const app = express();
 const port = 8080;
@@ -21,14 +20,14 @@ app.engine('handlebars', handlebars.engine());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, 'public')));
+
 //app.use('/', vistasRouter);
-
-
 //app.use('/products', tuRouterDeProductos); 
 
 app.use('/socket.io', express.static(path.join(__dirname, '../node_modules/socket.io/client-dist')));
 app.use(express.json());
 leerMensajes();
+
 //app.use('/api', apiRouter);
 
 app.use('/api/products', productsRouter);
