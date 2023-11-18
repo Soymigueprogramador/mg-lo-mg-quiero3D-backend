@@ -1,14 +1,15 @@
-import mongoose from "mongoose"; 
+import mongoose, { Mongoose } from "mongoose"; 
 import mongoosePaginate from 'mongoose-paginate-v2'; 
 import { cartModel } from '../dao/models/user.model';
 import { productsModel } from "../dao/models/user.model";
 import { Router } from "express";
 import { body, validationResult } from 'express-validator'; 
 import { ObjectId } from "mongoose";
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
 const router = Router(); 
 
-//desde aca voy a conectarme con mi base de datos. dentro de poco.
+Mongoose.connect('mongodb+srv://soymigueprogramador:<password>@mg-lo-quiero-3d-databas.ph2h9f6.mongodb.net/?retryWrites=true&w=majority');
 
 router.get('/carts/:cid', async (req, res) => {
     try{

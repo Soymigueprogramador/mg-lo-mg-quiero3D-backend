@@ -8,23 +8,21 @@ import productsRouter from '../src/router/products.router.js';
 import { cartModel } from './dao/models/user.model.js';
 import { productsModel } from './dao/models/user.model.js';
 import { chatModel } from './dao/models/user.model.js';
+import __dirname from './util.js';
 
 const app = express();
 const port = 8080;
 
 app.use(express.json());
 app.engine('handlebars', handlebars.engine());
-//app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
-//app.use(express.static(path.join(__dirname, 'public')));
-
-//app.use('/socket.io', express.static(path.join(__dirname, '../node_modules/socket.io/client-dist')));
-
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/socket.io', express.static(path.join(__dirname, '../node_modules/socket.io/client-dist')));
 
 app.use(express.json());
 
-// Remove redundant calls to `leerMensajes()`
-// leerMensajes();
+leerMensajes();
 
 app.use('/api/products', productsRouter);
 app.use('/api/cart', cartRouter);
@@ -33,8 +31,19 @@ const server = app.listen(port, () => {
     console.log(`Servidor despierto en el ${port}`);
 });
 
-let mensajes = [];
-let usuarios = [];
+const mensajes = [];
+leerMensajes();
+const usuarios = [];
+
+app.get('/', (req, res) => {
+    res.setHeader('content-type', 'text/html');
+    res.status(200).render('home');
+})
+
+app.get('/chat', (req, res) => {
+    res.setHeader('content-type', 'text/html');
+    res.status(200).render('chat');
+});;
 
 const io = new Server(server);
 
@@ -42,36 +51,25 @@ app.locals.io = io;
 
 io.on('connection', (socket) => {
     console.log(`Se conectó un usuario nuevo con el id ${socket.id}`);
-    
-    // Corrected 'Socket' to 'socket'
     socket.on('id', (email) => {
         console.log(`Se conectó un usuario con el ${email}`);
-        
         mensajes.push({
             user: 'server',
             mensaje: 'Hola, te damos la bienvenida al chat. ¿En qué podemos ayudarte?',
         });
-        
         usuarios.push({ id: socket.id, usuario: email });
-        
-        // Corrected 'Socket.emit' to 'socket.emit'
         socket.emit('Bienvenido', mensajes);
-        
-        // Corrected 'Socket.broadcast.emit' to 'socket.broadcast.emit'
         socket.broadcast.emit('nuevoUsuario', email);
-        
         mensajes.pop();
     });
 
     socket.on('nuevoMensaje', (mensaje) => {
         mensajes.push(mensaje);
         io.emit('llegoUnNuevoMensaje', mensaje);
-
         const nuevoMensaje = new chatModel({
             user: mensaje.user,
             mensaje: mensaje.mensaje,
         });
-
         nuevoMensaje.save()
             .then(() => {
                 console.log('Mensaje guardado');
@@ -80,22 +78,36 @@ io.on('connection', (socket) => {
                 console.log('Error al guardar el mensaje', error);
             });
     });
-
     socket.on('disconnect', () => {
         console.log(`Se desconectó el cliente con el ID ${socket.id}`);
-        
         const indice = usuarios.findIndex((usuario) => usuario.id === socket.id);
-        
         if (indice >= 0) {
             const emailDesconectado = usuarios[indice].usuario;
-            
-            // Corrected 'socket.broadcast.emit' to 'socket.broadcast.emit'
             socket.broadcast.emit('desconeccion', emailDesconectado);
-            
             usuarios.splice(indice, 1);
         }
     });
 });
+
+//Link y codigo para conectarme a la base de datos de mongo atlas.
+const url = 'mongodb+srv://soymigueprogramador:<password>@mg-lo-quiero-3d-databas.ph2h9f6.mongodb.net/?retryWrites=true&w=majority';
+const client = new MongoClient(url, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+async function run() {
+  try {
+    await client.connect();
+    await client.db("admin").command({ ping: 1 });
+    console.log("Conectado a  MongoDB!");
+  } finally {
+    await client.close();
+  }
+}
+run().catch(console.dir);
 
 async function leerMensajes() {
     try {
@@ -109,4 +121,4 @@ async function leerMensajes() {
     } catch (error) {
         console.error('Error al leer los mensajes guardados', error);
     }
-}
+};
