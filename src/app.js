@@ -98,13 +98,24 @@ const dbName = 'MG-lo-quiero-3d-database';
 
 const url = `mongodb+srv://${username}:${password}@mg-lo-quiero-3d-databas.ph2h9f6.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 
-const client = new MongoClient(url, {
+/*const client = new MongoClient(url, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
-});
+  }*/
+
+
+
+mongoose.connect('mongodb+srv://soymigueprogramador:<password>@mg-lo-quiero-3d-databas.ph2h9f6.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('Conexión exitosa a la base de datos');
+    // Resto de tu código aquí
+  })
+  .catch((error) => {
+    console.error('No me pude conectar a la base de datos', error);
+    process.exit(1);
+  });
 
 async function run() {
   try {
@@ -118,7 +129,7 @@ async function run() {
 run().catch(console.dir);
 
 async function findChats() {
-  let retries = 3; 
+  let retries = 1; 
   while (retries > 0) {
     try {
       const result = await ChatModel.findChats();
