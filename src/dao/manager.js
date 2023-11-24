@@ -9,7 +9,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 
 const router = Router(); 
 
-Mongoose.connect('mongodb+srv://soymigueprogramador:<password>@mg-lo-quiero-3d-databas.ph2h9f6.mongodb.net/?retryWrites=true&w=majority');
+module.export = () => mongoose.connect('mongodb+srv://soymigueprogramador:<password>@mg-lo-quiero-3d-databas.ph2h9f6.mongodb.net/?retryWrites=true&w=majority');
 
 router.get('/carts/:cid', async (req, res) => {
     try{

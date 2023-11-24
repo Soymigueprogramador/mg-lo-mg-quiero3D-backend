@@ -9,15 +9,18 @@ import { cartModel } from './dao/models/user.model.js';
 import { productsModel } from './dao/models/user.model.js';
 import { chatModel } from './dao/models/user.model.js';
 import __dirname from './util.js';
+import { MongoClient, ServerApiVersion } from 'mongodb';
+import mongoose from 'mongoose';
+
 
 const app = express();
-const port = 8080;
+const port = 8000;
 
 app.use(express.json());
 app.engine('handlebars', handlebars.engine());
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'handlebars');
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '/public')));
 app.use('/socket.io', express.static(path.join(__dirname, '../node_modules/socket.io/client-dist')));
 
 app.use(express.json());
@@ -38,12 +41,12 @@ const usuarios = [];
 app.get('/', (req, res) => {
     res.setHeader('content-type', 'text/html');
     res.status(200).render('home');
-})
+});
 
 app.get('/chat', (req, res) => {
     res.setHeader('content-type', 'text/html');
     res.status(200).render('chat');
-});;
+});
 
 const io = new Server(server);
 
@@ -89,8 +92,12 @@ io.on('connection', (socket) => {
     });
 });
 
-//Link y codigo para conectarme a la base de datos de mongo atlas.
-const url = 'mongodb+srv://soymigueprogramador:<password>@mg-lo-quiero-3d-databas.ph2h9f6.mongodb.net/?retryWrites=true&w=majority';
+const username = 'soymigueprogramador';
+const password = 'loquiero3d';
+const dbName = 'MG-lo-quiero-3d-database';
+
+const url = `mongodb+srv://${username}:${password}@mg-lo-quiero-3d-databas.ph2h9f6.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+
 const client = new MongoClient(url, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -98,16 +105,33 @@ const client = new MongoClient(url, {
     deprecationErrors: true,
   }
 });
+
 async function run() {
   try {
     await client.connect();
-    await client.db("admin").command({ ping: 1 });
-    console.log("Conectado a  MongoDB!");
+    await client.db(dbName).command({ ping: 1 });
+    console.log("Conectado a MongoDB!");
   } finally {
     await client.close();
   }
 }
 run().catch(console.dir);
+
+async function findChats() {
+  let retries = 3; 
+  while (retries > 0) {
+    try {
+      const result = await ChatModel.findChats();
+      return result;
+    } catch (error) {
+      console.error('Error al leer los mensajes guardados', error);
+      retries--;
+    }
+  }
+  console.error('Operación de búsqueda fallida después de varios intentos');
+  return null;
+}
+findChats();
 
 async function leerMensajes() {
     try {
