@@ -11,8 +11,7 @@ import { chatModel } from './dao/models/user.model.js';
 import __dirname from './util.js';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import mongoose from 'mongoose';
-import configDB from './config/config.db.js'; 
-
+import { conectameMongodb } from './config/config.db.js';  
 
 const app = express();
 const port = 8080;
@@ -26,7 +25,7 @@ app.use('/socket.io', express.static(path.join(__dirname, '../node_modules/socke
 
 app.use(express.json());
 
-leerMensajes();
+//leerMensajes();
 
 app.use('/api/products', productsRouter);
 app.use('/api/cart', cartRouter);
@@ -36,16 +35,16 @@ const server = app.listen(port, () => {
 });
 
 const mensajes = [];
-leerMensajes();
+//leerMensajes();
 const usuarios = [];
 
 app.get('/', (req, res) => {
-    res.setHeader('content-type', 'text/html');
+    res.setHeader('Content-Type', 'text/html');
     res.status(200).render('home');
 });
 
 app.get('/chat', (req, res) => {
-    res.setHeader('content-type', 'text/html');
+    res.setHeader('Content-Type', 'text/html');
     res.status(200).render('chat');
 });
 
@@ -93,7 +92,7 @@ io.on('connection', (socket) => {
     });
 });
 
-async function leerMensajes() {
+/*async function leerMensajes() {
     try {
         const mensajesDB = await chatModel.find({}, 'user mensaje').exec();
         const mensajeArray = mensajesDB.map((documento) => ({
@@ -106,3 +105,4 @@ async function leerMensajes() {
         console.error('Error al leer los mensajes guardados', error);
     }
 };
+leerMensajes();*/
