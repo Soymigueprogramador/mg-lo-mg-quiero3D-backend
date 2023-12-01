@@ -8,7 +8,7 @@ import productsRouter from '../src/router/products.router.js';
 import { cartModel } from './dao/models/user.model.js';
 import { productsModel } from './dao/models/user.model.js';
 import { chatModel } from './dao/models/user.model.js';
-import __dirname from './util.js';
+import __dirname from './utils.js';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import mongoose from 'mongoose';
 import { conectameMongodb } from './config/config.db.js';  
@@ -25,25 +25,26 @@ app.use('/socket.io', express.static(path.join(__dirname, '../node_modules/socke
 
 app.use(express.json());
 
-//leerMensajes();
+leerMensajes();
 
 app.use('/api/products', productsRouter);
 app.use('/api/cart', cartRouter);
+app.use('/api/vistas', vistasRouter)
 
 const server = app.listen(port, () => {
     console.log(`Servidor despierto en el ${port}`);
 });
 
 const mensajes = [];
-//leerMensajes();
+leerMensajes();
 const usuarios = [];
 
-app.get('/', (req, res) => {
+app.use('/', (req, res) => {
     res.setHeader('Content-Type', 'text/html');
     res.status(200).render('home');
 });
 
-app.get('/chat', (req, res) => {
+app.use('/chat', (req, res) => {
     res.setHeader('Content-Type', 'text/html');
     res.status(200).render('chat');
 });
@@ -92,7 +93,7 @@ io.on('connection', (socket) => {
     });
 });
 
-/*async function leerMensajes() {
+async function leerMensajes() {
     try {
         const mensajesDB = await chatModel.find({}, 'user mensaje').exec();
         const mensajeArray = mensajesDB.map((documento) => ({
@@ -102,7 +103,7 @@ io.on('connection', (socket) => {
         mensajes.length = 0;
         mensajes.push(...mensajeArray);
     } catch (error) {
-        console.error('Error al leer los mensajes guardados', error);
+        console.error('Error al leer los mensajes guardados:', error);
+
     }
 };
-leerMensajes();*/
