@@ -29,7 +29,6 @@ leerMensajes();
 
 app.use('/api/products', productsRouter);
 app.use('/api/cart', cartRouter);
-app.use('/api/vistas', vistasRouter)
 
 const server = app.listen(port, () => {
     console.log(`Servidor despierto en el ${port}`);
