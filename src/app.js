@@ -11,9 +11,11 @@ import { chatModel } from './dao/models/user.model.js';
 import __dirname from './utils.js';
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import mongoose from 'mongoose';
-import { conectameMongodb } from './config/config.db.js';  
+import { conectameMongodb } from './config/config.db.js'; 
+import dotenv from 'dotenv'; 
 
 const app = express();
+//const port = process.env.PORT;
 const port = 8080;
 
 app.use(express.json());
