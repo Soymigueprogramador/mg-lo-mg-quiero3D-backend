@@ -26,7 +26,7 @@ app.use('/socket.io', express.static(path.join(__dirname, '../node_modules/socke
 
 app.use(express.json());
 
-leerMensajes();
+//leerMensajes();
 
 app.use('/api/products', productsRouter);
 app.use('/api/cart', cartRouter);
@@ -36,7 +36,7 @@ const server = app.listen(port, () => {
 });
 
 const mensajes = [];
-leerMensajes();
+//leerMensajes();
 const usuarios = [];
 
 app.use('/', (req, res) => {
