@@ -1,5 +1,6 @@
-console.log('OK')
-const socket= io ()
+const socket = io();
+const emailElement = document.getElementById('email-data');
+const useremail = emailElement.dataset.email; 
 
 let email='';
 let divMensajes = document.getElementById('mensajes');
@@ -18,7 +19,8 @@ inputMensajes.addEventListener('keyup',evt=> {
 Swal.fire({
     title: "Identifíquese",
     input: "text",
-    text: "Ingrese su e-mail",
+    text: "ingrese su email",
+    inputValue: useremail, 
     inputValidator: (value) => {
         if (!value) {
         return 'Debes ingresar una dirección de correo electrónico';
@@ -59,9 +61,7 @@ Swal.fire({
             } )
             socket.on ('llegoMensaje', mensaje => {
                 let txt = ''
-                
                 txt+= (`<p class="mensaje"> <strong> ${mensaje.user} </strong> : <i> ${mensaje.message} </i> </P> <br> `)
-            
                 divMensajes.innerHTML += txt
                 divMensajes.scrollTop = divMensajes.scrollHeight;
             })

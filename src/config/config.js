@@ -25,3 +25,5 @@ export const config = {
     GMAIL_PASS : process.env.GMAIL_PASS,
     PORT : process.env.PORT 
 };
+
+export default config;
