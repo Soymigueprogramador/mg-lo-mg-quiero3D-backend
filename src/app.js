@@ -13,6 +13,16 @@ import { MongoClient, ServerApiVersion } from 'mongodb';
 import mongoose from 'mongoose';
 import { conectameMongodb } from './config/config.db.js'; 
 import dotenv from 'dotenv'; 
+import apiCartRouter from './router/cart.router.js';
+import apiProductsRouter from './router/products.router.js';
+import vistasRouter from './router/vistas.router'; 
+import { router as sessionsRouter } from './router/sessions.router.js'; 
+import sessions from 'express-sessions'; 
+import ConnectMongo from 'connect-mongo';
+import inicializandoPassport from './middlewares/passport-config.js';
+import passport, { initialize } from 'passport'; 
+import config from './config/config.js'; 
+import { chatModels } from './dao/models/user.model.js';
 
 const app = express();
 const port = 8080;
@@ -23,10 +33,16 @@ app.set('views', path.join(__dirname, '/views'));
 app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, '/public')));
 app.use('/socket.io', express.static(path.join(__dirname, '../node_modules/socket.io/client-dist')));
+app.use(passport, initialize());
+app.use(passport, sessions());
+app.use('/api/sessions', sessionsRouter);
+app.use('/', vistasRouter);
+
+//app.use({});
 
 app.use(express.json());
 
-//leerMensajes();
+leerMensajes();
 
 app.use('/api/products', productsRouter);
 app.use('/api/cart', cartRouter);
@@ -36,7 +52,7 @@ const server = app.listen(port, () => {
 });
 
 const mensajes = [];
-//leerMensajes();
+leerMensajes();
 const usuarios = [];
 
 app.use('/', (req, res) => {
