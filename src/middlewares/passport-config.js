@@ -1,10 +1,10 @@
-import passport from 'passport';import
-import passportLocal from 'passport-local';
-import passportGithub from 'passport-github';
+import passport from "passport";
+import local from 'passport-local';
 import crypto from 'crypto';
-import { config } from '../config/config.js';
-import { isValidPassword, validarCorreoElectronico } from '../utils.js';
-import { usersServices } from '../services/usersServices.js';
+import GitHubStrategy from 'passport-github2';
+import config from '../config/config';
+import { isValidatorPassword } from '../utils';
+import { userServices } from '../serves/userServices';
 
 const app = express();
 
