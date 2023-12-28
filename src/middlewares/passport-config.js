@@ -2,9 +2,9 @@ import passport from "passport";
 import local from 'passport-local';
 import crypto from 'crypto';
 import GitHubStrategy from 'passport-github2';
-import config from '../config/config';
-import { isValidatorPassword } from '../utils';
-import { userServices } from '../serves/userServices';
+import { config } from '../config/config.js';
+import isValidatorPassword from '../utils.js';
+import { userServices } from '../serves/userServices.js';
 
 const app = express();
 

@@ -41,7 +41,7 @@ import { Router } from 'express';
 import bodyParser from 'body-parser';
 import usersController from '../controllers/usersControllers.js';
 import passport from 'passport';
-import dtousuario from '../middlewares/dtUsuarios';
+import dtousuario from '../middlewares/dtoUsuarios.js';
 
 const router = Router();
 

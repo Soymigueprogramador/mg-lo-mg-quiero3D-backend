@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'; 
-import { command, option } from 'commander';
+import { Command, Option } from 'commander';
 
-const programa = new command(); 
+const programa = new Command(); 
 
 let pathenv = './src/.env.${opciones.modo}'; 
 

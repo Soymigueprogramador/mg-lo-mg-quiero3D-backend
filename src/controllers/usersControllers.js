@@ -1,7 +1,7 @@
 import {Router} from 'express';
 import bodyParser from 'body-parser';
 import {config} from '../config/config.js';
-import dtoUsuario from '../middlewares/dtoUsuario.js'
+import dtoUsuario from '../middlewares/dtoUsuarios.js'; 
 
 export const router = Router();
 

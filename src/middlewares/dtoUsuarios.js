@@ -1,3 +1,5 @@
+import dtoUsuario from './dtoUsuarios.js';
+
 function DatosDeUsuarios(req, res, next) {
     try {
         const usuario = req.session.usuario;

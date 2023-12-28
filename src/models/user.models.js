@@ -5,6 +5,8 @@ import GitHubStrategy from 'passport-github2';
 import {config} from '../config/config.js'
 import {isValidPassword} from '../util.js';
 import { usersServices } from '../services/usersServices.js';
+//import { cartModel } from '../dao/userDataManager.js';
+import userDataManager from '../dao/userDataManager.js';
 
 const inicializaPassport = () => {
 
