@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'; 
-import config from '../config/config';
-import userDataManager from '../dao/userDataManager.js';
+import config from '../config/config.db.js';
+import usersDataManager from '../dao/userDataManager.js'; 
 
 const cartCollection = ''; //datos a guardar en el archivo .env.
 const productsCollection = ''; //datos a guardar en el archivo .env.
