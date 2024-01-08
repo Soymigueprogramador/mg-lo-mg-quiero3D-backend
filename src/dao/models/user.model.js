@@ -1,9 +1,8 @@
 import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 import { cartModels } from '../../models/carts.models.js';
-import usersDataManager from '../userDataManager.js';
 
-const cartCollection = 'carts1';
+const cartsCollection = 'carts1';
 const productCollection = 'products1';
 const chatCollection = 'chats1';
 
@@ -36,7 +35,6 @@ const chatSchema = new mongoose.Schema({
     mensaje: String,
 });
 
-export const cartModel = mongoose.model(cartCollection, cartSchema);
+export const cartsModel = mongoose.model(cartsCollection, cartSchema);
 export const productsModel = mongoose.model(productCollection, productSchema);
 export const chatModel = mongoose.model(chatCollection, chatSchema); 
-export default usersDataManager; 

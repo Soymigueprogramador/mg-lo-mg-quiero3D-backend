@@ -1,6 +1,6 @@
-export { userDataManager } from '../dao/userDataManager.js';
+export { userModel } from '../dao/userDataManager.js';
 
-class UserDao {
+class userDao {
     constructor() {
         this.DaoUser = new UserDao(); 
     }
@@ -22,4 +22,4 @@ class UserDao {
     };
 }
 
-export const userServices = new userServices(UserDao); 
+export const usersServices = new usersServices (DAOUsers);

@@ -1,21 +1,24 @@
 import mongoose from 'mongoose'; 
-import config from '../config/config.db.js';
-import usersDataManager from '../dao/userDataManager.js'; 
+//import { cartModels } from '../models/carts.models';
+import { conectameMongodb } from '../config/config.db.js';
+import { userModel } from '../dao/userDataManager.js';
 
 const cartCollection = ''; //datos a guardar en el archivo .env.
-const productsCollection = ''; //datos a guardar en el archivo .env.
+const productCollection = 'productId'; //datos a guardar en el archivo .env.
 
-const cartsCollection = new mongoose.Schema({
-    product: [
-        new mongoose.Schema({
-            productId: {
-                type: mongoose.Schema.Types.object,
-                ref: productsCollection
-            },
-            quantity: { type: Number },
-        }),
-        { _id: false }
+const cartSchema = new mongoose.Schema({
+    products: [
+      new mongoose.Schema(
+        {
+          productId: { 
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: productCollection
+          },
+          quantity: { type: Number},
+        },
+        { _id: false } 
+      ),
     ],
-});
+  });
 
-export const cartModels = mongoose.Schema ( cartCollection, cartSchema );
+export const cartModels = mongoose.model(cartCollection, cartSchema);  

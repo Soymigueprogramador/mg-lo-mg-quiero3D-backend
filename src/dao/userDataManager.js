@@ -1,9 +1,11 @@
-import mongoose from 'mongoose';
-import { cartModel } from '../models/cart.model.js';
+/*import mongoose from 'mongoose';
+import { cartModels } from '../models/carts.models.js';
 import userModel from '../models/user.model.js';
 import {Router} from 'express';
 import {createHash} from '../util.js';
 import {config} from '../config/config.js'
+import inicializaPassport from '../models/user.models.js';
+
 
 const router = Router ()
 
@@ -71,4 +73,23 @@ async crearUsuario  (name,email,password,typeofuser,last_name,age)
 }
 }
 
-export default usersDataManager
+export default usersDataManager*/
+
+
+
+import mongoose from 'mongoose'
+import {config} from '../config/config.js';
+
+const usersCollection = 'usuarios';
+
+const userSchema = new mongoose.Schema ({
+    name : String,
+    email: {type: String, unique:true},
+    password : String,
+    cartId : {required : true, type:mongoose.Schema.Types.ObjectId},
+    typeofuser : String,
+    age : Number,
+    last_name : String
+})
+
+export const userModel = mongoose.model (usersCollection, userSchema)

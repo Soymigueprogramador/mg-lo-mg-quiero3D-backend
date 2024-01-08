@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import cartModel from '../models/carts.models.js';
+import cartModels from '../models/carts.models.js';
 import {Router} from 'express';
 import { ObjectId } from 'mongodb';
 import {config} from '../config/config.js'

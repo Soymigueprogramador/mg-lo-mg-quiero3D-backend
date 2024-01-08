@@ -17,4 +17,4 @@ export async function conectameMongodb() {
         console.error('UH capo algo salió mal y no te conectaste a la base de datos', error);
     }
 };
-conectameMongodb();
+conectameMongodb(); 
