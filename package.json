@@ -1,33 +1,34 @@
 {
-  "name": "mg-lo-quiero3d-backend",
-  "version": "1.0.0",
-  "type": "module",
-  "description": "este es un proyecto backend para un emprendimiento de impresion 3D ",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Miguel Salazar",
-  "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "commander": "^11.1.0",
-    "connect-mongo": "^5.1.0",
-    "crypto": "^1.0.1",
-    "dotenv": "^16.3.1",
-    "express": "^4.18.2",
-    "express-handlebars": "^7.1.2",
-    "express-sessions": "^1.0.6",
-    "express-validator": "^7.0.1",
-    "mongodb": "^6.3.0",
-    "mongoose": "^8.0.0",
-    "mongoose-paginate-v2": "^1.7.4",
-    "nodemon": "^3.0.2",
-    "passport": "^0.7.0",
-    "passport-github": "^1.1.0",
-    "passport-github2": "^0.1.12",
-    "passport-local": "^1.0.0",
-    "socket.io": "^4.7.2",
-    "socket.io-client": "^4.7.2"
-  }
+    "name": "mg-lo-quiero3d-backend",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "este es un proyecto backend para un emprendimiento de impresion 3D ",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon ./src/app.js"
+    },
+    "author": "Miguel Salazar",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^5.1.1",
+        "commander": "^11.1.0",
+        "connect-mongo": "^5.1.0",
+        "crypto": "^1.0.1",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "express-handlebars": "^7.1.2",
+        "express-sessions": "^1.0.6",
+        "express-validator": "^7.0.1",
+        "mongodb": "^6.3.0",
+        "mongoose": "^8.0.0",
+        "mongoose-paginate-v2": "^1.7.4",
+        "nodemon": "^3.0.2",
+        "passport": "^0.7.0",
+        "passport-github": "^1.1.0",
+        "passport-github2": "^0.1.12",
+        "passport-local": "^1.0.0",
+        "socket.io": "^4.7.2",
+        "socket.io-client": "^4.7.2"
+    }
 }

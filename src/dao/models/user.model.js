@@ -1,40 +1,15 @@
-import mongoose from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate-v2';
-import { cartModels } from '../../models/carts.models.js';
+import mongoose from "mongoose";
 
-const cartsCollection = 'carts1';
-const productCollection = 'products1';
-const chatCollection = 'chats1';
+const usersCollection = "usuarios";
 
-const productSchema = new mongoose.Schema({
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    price: { type: Number, required: true },
-    stock: { type: Number, required: true },
-    category: { type: String, required: true },
-    thumbnail: [],
-    status: { type: Boolean, required: true },
-});
-productSchema.plugin(mongoosePaginate);
-
-const cartSchema = new mongoose.Schema({
-    products: [
-        new mongoose.Schema({
-            productId: {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true,
-                ref: productCollection,
-            },
-            quantity: { type: Number, required: true },
-        }),
-    ],
+const userSchema = new mongoose.Schema({
+    name: String,
+    email: { type: String, unique: true },
+    password: String,
+    cartId: { required: true, type: mongoose.Schema.Types.ObjectId },
+    typeofuser: String,
+    age: Number,
+    last_name: String,
 });
 
-const chatSchema = new mongoose.Schema({
-    user: String,
-    mensaje: String,
-});
-
-export const cartsModel = mongoose.model(cartsCollection, cartSchema);
-export const productsModel = mongoose.model(productCollection, productSchema);
-export const chatModel = mongoose.model(chatCollection, chatSchema); 
+export const userModel = mongoose.model(usersCollection, userSchema);

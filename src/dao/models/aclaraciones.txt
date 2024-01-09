@@ -1,0 +1,3 @@
+Dividí todas los schemas de cada uno de los documentos de mongoose.
+No cambié el código solo lo Dividí.
+Traje el schema de user a su propio modelo.

@@ -1,4 +1,4 @@
-import dtoUsuario from './dtoUsuarios.js';
+import dtoUsuario from "./dtoUsuarios.js";
 
 function DatosDeUsuarios(req, res, next) {
     try {
@@ -9,14 +9,14 @@ function DatosDeUsuarios(req, res, next) {
             cartId: usuario.cartId,
             typeofuser: usuario.typeofuser,
             age: usuario.age,
-            last_name: usuario.last_name
+            last_name: usuario.last_name,
         };
         req.datos = { usuario: formatoDeUsuario };
         next();
     } catch (error) {
-        console.log('Error en el middleware de datos de usuarios', error);
-        return res.status(500).send({ mensaje: 'Error en el servidor' });
+        console.log("Error en el middleware de datos de usuarios", error);
+        return res.status(500).send({ mensaje: "Error en el servidor" });
     }
 }
 
-export default dtUsuario;
+export default DatosDeUsuarios;

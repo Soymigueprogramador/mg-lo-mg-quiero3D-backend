@@ -1,0 +1,3 @@
+Saqué el schema de user y lo mande a la carpeta models, esa carpeta yo preferiría llamarla schemas pero eso es cuestión mia.
+Descomenté la clase usersDataManager y comenté todo el código innecesario.
+Modifiqué las importaciones para que las rutas sean las correctas.

@@ -1,0 +1,6 @@
+Modifiqué el nombre de la clase que contiene los métodos de UserSerivices y cómo se importa el dao.
+
+Modifiqué el constructor de la clase para que construya una instancia correctamente.
+
+Agregué la ese en la llamada del this para que corresponda con el nuevo nombre.
+Modifiqué la exportación para que cree la instancia del Service con el dao del USER.
